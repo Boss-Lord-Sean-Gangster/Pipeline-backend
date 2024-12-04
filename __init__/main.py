@@ -3,11 +3,20 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from .auth import auth  # Importing the `auth` object from `auth.py`
 from .database import get_db  # Importing `get_db` from `database.py`
 from .models import models  # Importing models from `models.py`
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (you can replace "*" with specific origins, e.g., ["http://localhost:3000"])
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # OAuth2PasswordBearer: Used to extract the token from request headers
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
