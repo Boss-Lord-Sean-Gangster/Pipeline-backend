@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 import jwt
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from backend.models import models
+from .models import models
 import os
 from dotenv import load_dotenv
 

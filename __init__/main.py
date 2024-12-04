@@ -3,9 +3,9 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from db import database
-from authentication import auth
-from modelstables import models
+from .auth import auth  # Importing the `auth` object from `auth.py`
+from .database import get_db  # Importing `get_db` from `database.py`
+from .models import models  # Importing models from `models.py`
 
 app = FastAPI()
 
@@ -14,7 +14,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Token endpoint for login
 @app.post("/token")
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = auth.authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
@@ -24,7 +24,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 
 # Register user (sign up)
 @app.post("/register")
-def register_user(email: str, password: str, db: Session = Depends(database.get_db)):
+def register_user(email: str, password: str, db: Session = Depends(get_db)):
     # Check if the user already exists
     existing_user = db.query(models.User).filter(models.User.email == email).first()
     if existing_user:
