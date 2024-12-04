@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from modelstables import Base
+from backend.models import Base
 import os
 from dotenv import load_dotenv
 
@@ -21,9 +21,9 @@ def get_db():
         db.close()
 
 # Expose a database object
-database = {
-    "engine": engine,
-    "SessionLocal": SessionLocal,
-    "init_db": init_db,
-    "get_db": get_db,
-}
+# database = {
+#     "engine": engine,
+#     "SessionLocal": SessionLocal,
+#     "init_db": init_db,
+#     "get_db": get_db,
+# }

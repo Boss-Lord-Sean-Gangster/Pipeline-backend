@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 import jwt
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from modelstables import models
+from backend.models import models
 import os
 from dotenv import load_dotenv
 
@@ -48,13 +48,13 @@ def authenticate_user(db: Session, email: str, password: str):
         return user
     return None
 
-auth = {
-    "hash_password": hash_password,
-    "verify_password": verify_password,
-    "create_access_token": create_access_token,
-    "create_user": create_user,
-    "authenticate_user": authenticate_user,
-    "SECRET_KEY": SECRET_KEY,
-    "ALGORITHM": ALGORITHM,
-    "ACCESS_TOKEN_EXPIRE_MINUTES": ACCESS_TOKEN_EXPIRE_MINUTES
-}
+# auth = {
+#     "hash_password": hash_password,
+#     "verify_password": verify_password,
+#     "create_access_token": create_access_token,
+#     "create_user": create_user,
+#     "authenticate_user": authenticate_user,
+#     "SECRET_KEY": SECRET_KEY,
+#     "ALGORITHM": ALGORITHM,
+#     "ACCESS_TOKEN_EXPIRE_MINUTES": ACCESS_TOKEN_EXPIRE_MINUTES
+# }

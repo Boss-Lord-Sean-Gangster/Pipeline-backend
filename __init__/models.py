@@ -29,4 +29,4 @@ class Structure(Base):
     user = relationship("User", back_populates="structures")
 
 # Add a models export for easy import
-models = {"User": User, "Structure": Structure}
+# models = {"User": User, "Structure": Structure}
