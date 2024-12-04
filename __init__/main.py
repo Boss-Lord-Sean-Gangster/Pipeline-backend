@@ -4,6 +4,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from .auth import auth  # Importing the `auth` object from `auth.py`
 from .database import get_db  # Importing `get_db` from `database.py`
 from .models import models  # Importing models from `models.py`
@@ -21,6 +22,10 @@ app.add_middleware(
 # OAuth2PasswordBearer: Used to extract the token from request headers
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+
 # Token endpoint for login
 @app.post("/token")
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
@@ -33,14 +38,15 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 
 # Register user (sign up)
 @app.post("/register")
-def register_user(email: str, password: str, db: Session = Depends(get_db)):
+def register_user(request: RegisterRequest, db: Session = Depends(get_db)):
+    # Use request.email and request.password to access the data
     # Check if the user already exists
-    existing_user = db.query(models.User).filter(models.User.email == email).first()
+    existing_user = db.query(models.User).filter(models.User.email == request.email).first()
     if existing_user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already registered")
     
     # Create new user
-    new_user = auth.create_user(db, email, password)
+    new_user = auth.create_user(db, request.email, request.password)
     return {"msg": "User created successfully", "user": new_user.email}
 
 @app.get('/')
