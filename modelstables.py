@@ -1,3 +1,4 @@
+# modelstables.py
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -27,4 +28,5 @@ class Structure(Base):
 
     user = relationship("User", back_populates="structures")
 
-User.structures = relationship("Structure", back_populates="user")
+# Add a models export for easy import
+models = {"User": User, "Structure": Structure}
