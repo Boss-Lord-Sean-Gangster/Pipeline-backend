@@ -13,10 +13,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (you can replace "*" with specific origins, e.g., ["http://localhost:3000"])
+    allow_origins=["http://localhost:3000"],  # Explicit origin
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["POST", "OPTIONS","GET"],
+    allow_headers=["Content-Type"],
 )
 
 # OAuth2PasswordBearer: Used to extract the token from request headers
