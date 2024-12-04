@@ -19,3 +19,11 @@ def get_db():
         yield db
     finally:
         db.close()
+
+# Expose a database object
+database = {
+    "engine": engine,
+    "SessionLocal": SessionLocal,
+    "init_db": init_db,
+    "get_db": get_db,
+}
