@@ -47,3 +47,14 @@ def authenticate_user(db: Session, email: str, password: str):
     if user and verify_password(password, user.hashed_password):
         return user
     return None
+
+auth = {
+    "hash_password": hash_password,
+    "verify_password": verify_password,
+    "create_access_token": create_access_token,
+    "create_user": create_user,
+    "authenticate_user": authenticate_user,
+    "SECRET_KEY": SECRET_KEY,
+    "ALGORITHM": ALGORITHM,
+    "ACCESS_TOKEN_EXPIRE_MINUTES": ACCESS_TOKEN_EXPIRE_MINUTES
+}
