@@ -6,10 +6,11 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from .auth import auth  # Importing the `auth` object from `auth.py`
-from .database import get_db  # Importing `get_db` from `database.py`
+from .database import get_db,init_db  # Importing `get_db` from `database.py`
 from .models import models  # Importing models from `models.py`
 
 app = FastAPI()
+init_db()
 
 app.add_middleware(
     CORSMiddleware,
