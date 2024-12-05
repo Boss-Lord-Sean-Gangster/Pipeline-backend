@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from .auth import auth  # Importing the `auth` object from `auth.py`
+from .auth import create_user,create_access_token,authenticate_user # Importing the `auth` object from `auth.py`
 from .database import get_db,init_db  # Importing `get_db` from `database.py`
 from .models import models  # Importing models from `models.py`
 
@@ -30,11 +30,11 @@ class RegisterRequest(BaseModel):
 # Token endpoint for login
 @app.post("/token")
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = auth.authenticate_user(db, form_data.username, form_data.password)
+    user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     
-    access_token = auth.create_access_token(data={"sub": user.email})
+    access_token = create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
 # Register user (sign up)
@@ -47,7 +47,7 @@ def register_user(request: RegisterRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already registered")
     
     # Create new user
-    new_user = auth.create_user(db, request.email, request.password)
+    new_user = create_user(db, request.email, request.password)
     return {"msg": "User created successfully", "user": new_user.email}
 
 @app.get('/')
