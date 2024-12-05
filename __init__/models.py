@@ -20,7 +20,7 @@ class Structure(Base):
     __tablename__ = 'structures'
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, index=True)
+   user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     num_nodes = Column(Integer)
     num_edges = Column(Integer)
     created_at = Column(DateTime, default=datetime.utcnow)
