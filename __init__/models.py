@@ -1,4 +1,3 @@
-# modelstables.py
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -6,7 +5,7 @@ from datetime import datetime
 
 Base = declarative_base()
 
-# Users table model
+# User table model
 class User(Base):
     __tablename__ = 'users'
 
@@ -14,6 +13,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
+    structures = relationship("Structure", back_populates="user")
 
 # Structure table model
 class Structure(Base):
@@ -28,5 +28,7 @@ class Structure(Base):
 
     user = relationship("User", back_populates="structures")
 
-# Add a models export for easy import
-models = { User, Structure}
+# Create a namespace for the models
+class models:
+    User = User
+    Structure = Structure
