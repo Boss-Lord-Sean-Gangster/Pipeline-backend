@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -20,7 +20,7 @@ class Structure(Base):
     __tablename__ = 'structures'
 
     id = Column(Integer, primary_key=True, index=True)
-   user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     num_nodes = Column(Integer)
     num_edges = Column(Integer)
     created_at = Column(DateTime, default=datetime.utcnow)
