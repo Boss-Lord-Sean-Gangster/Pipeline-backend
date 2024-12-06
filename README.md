@@ -47,7 +47,12 @@ backend/ ├── auth.py # Handles user authentication and token generation �
    git clone https://github.com/your-backend-repo.git
    cd backend
 
-2. **Start the backend server**:
+2. **Enter the virutal environment (venv)**:
+
+   ```bash
+   venv\Scripts\activate
+
+3. **Start the backend server**:
 
    ```bash
    uvicorn __init__.main:app --reload
