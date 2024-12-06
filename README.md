@@ -50,7 +50,7 @@ backend/ ├── auth.py # Handles user authentication and token generation �
 2. **Start the backend server**:
 
    ```bash
-   uvicorn main:app --reload
+   uvicorn __init__.main:app --reload
 
 
 
