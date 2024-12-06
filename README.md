@@ -26,6 +26,9 @@ This repository contains the backend services for the **Pipeline Management Appl
 ---
 
 ## Folder Structure
+backend/ ├── auth.py # Handles user authentication and token generation ├── database.py # Manages database connection and initialization ├── models.py # Defines database models using SQLAlchemy ├── main.py # Contains API routes and application logic ├── requirements.txt # Lists all dependencies for the project
+
+
 ---
 
 ## Getting Started
